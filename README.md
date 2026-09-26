@@ -45,6 +45,37 @@ The app includes a built-in theme switcher:
 - `styles.css` — all layout and visual styling
 - `script.js` — URL parsing, counting, opening tabs, and theme logic
 
+## GitHub Pages deployment
+
+This project is designed to run as a static site and can be published on GitHub Pages.
+
+### Steps
+
+1. Push this repository to GitHub.
+2. Open the repository on GitHub.
+3. Go to `Settings` → `Pages`.
+4. Set the source to `GitHub Actions`.
+5. The workflow in `.github/workflows/pages.yml` will deploy the site automatically.
+
+### Live URL
+
+Once published, the site will be available at:
+
+```text
+https://jef-king.github.io/OpenBulkUrl/
+```
+
+## SEO notes
+
+The page includes metadata for search engines and social sharing, including:
+- title and description
+- Open Graph tags
+- Twitter card tags
+- canonical URL
+- structured data (JSON-LD)
+
+Make sure the live GitHub Pages URL matches the URL in `index.html` before publishing.
+
 ## Notes
 
 This project is designed as a static front-end tool and does not require a server or database.
