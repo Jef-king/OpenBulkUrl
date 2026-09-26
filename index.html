@@ -3,153 +3,37 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="theme-color" content="#101827">
+    <meta name="theme-color" content="#2aa87e">
+    <meta name="description" content="OpenBulkUrl lets you paste multiple links and open them in bulk with one click. Fast, simple, and built for quick browsing.">
+    <meta name="keywords" content="open multiple links, bulk URL opener, open tabs, browser tools, URL list opener">
+    <meta name="author" content="OpenBulkUrl">
+    <meta name="robots" content="index, follow">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="OpenBulkUrl | Open links in bulk">
+    <meta property="og:description" content="Paste one URL per line and open them all in a single click.">
+    <meta property="og:image" content="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=1200&q=80">
+    <meta property="og:url" content="https://example.com/openbulkurl">
+    <meta property="og:site_name" content="OpenBulkUrl">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="OpenBulkUrl | Open links in bulk">
+    <meta name="twitter:description" content="Paste one URL per line and open them all in a single click.">
+    <meta name="twitter:image" content="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=1200&q=80">
     <title>OpenBulkUrl | Open links in bulk</title>
-    <style>
-        :root {
-            color-scheme: dark;
-            --ink: #e9eef7;
-            --muted: #93a2b8;
-            --panel: rgba(19, 30, 48, 0.86);
-            --panel-border: rgba(164, 184, 211, 0.2);
-            --field: #0d1727;
-            --accent: #6ee7b7;
-            --accent-strong: #35c997;
-            --warning: #f8c471;
-        }
-
-        * { box-sizing: border-box; }
-
-        body {
-            min-height: 100vh;
-            margin: 0;
-            display: grid;
-            place-items: center;
-            padding: 32px 18px;
-            color: var(--ink);
-            background: #0a1220;
-            font-family: Georgia, 'Times New Roman', serif;
-        }
-
-        body::before {
-            content: '';
-            position: fixed;
-            inset: 0;
-            z-index: -1;
-            background:
-                radial-gradient(circle at 12% 12%, rgba(54, 150, 129, .2), transparent 32%),
-                radial-gradient(circle at 90% 84%, rgba(64, 99, 157, .22), transparent 34%),
-                linear-gradient(135deg, #0b1423 0%, #111c30 52%, #0a1525 100%);
-        }
-
-        .app {
-            width: min(100%, 780px);
-            overflow: hidden;
-            border: 1px solid var(--panel-border);
-            border-radius: 18px;
-            background: var(--panel);
-            box-shadow: 0 24px 80px rgba(0, 0, 0, .3);
-            backdrop-filter: blur(18px);
-            animation: appear .55s ease-out both;
-        }
-
-        .intro { padding: 40px 42px 26px; }
-
-        .eyebrow {
-            margin: 0 0 12px;
-            color: var(--accent);
-            font: 700 11px/1.2 Arial, sans-serif;
-            letter-spacing: .16em;
-            text-transform: uppercase;
-        }
-
-        h1 { margin: 0; font-size: clamp(2.4rem, 7vw, 4.5rem); line-height: .95; letter-spacing: -.045em; }
-
-        .subtitle {
-            max-width: 530px;
-            margin: 20px 0 0;
-            color: var(--muted);
-            font: 16px/1.6 Arial, sans-serif;
-        }
-
-        .workspace { padding: 0 42px 36px; }
-
-        .field-label {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 10px;
-            font: 700 12px Arial, sans-serif;
-            letter-spacing: .08em;
-            text-transform: uppercase;
-        }
-
-        #urlInput {
-            display: block;
-            width: 100%;
-            min-height: 260px;
-            resize: vertical;
-            padding: 18px;
-            border: 1px solid var(--panel-border);
-            border-radius: 10px;
-            outline: none;
-            color: var(--ink);
-            background: var(--field);
-            font: 15px/1.7 Consolas, 'Courier New', monospace;
-            transition: border-color .2s, box-shadow .2s;
-        }
-
-        #urlInput::placeholder { color: #56667d; }
-        #urlInput:focus { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(110, 231, 183, .13); }
-
-        .actions {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 16px;
-            margin-top: 18px;
-        }
-
-        .hint { color: var(--muted); font: 13px/1.4 Arial, sans-serif; }
-
-        button {
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-            min-height: 48px;
-            padding: 0 20px;
-            border: 0;
-            border-radius: 8px;
-            color: #062318;
-            background: var(--accent);
-            cursor: pointer;
-            font: 700 14px Arial, sans-serif;
-            transition: transform .2s, background .2s, box-shadow .2s;
-        }
-
-        button:hover { background: #9af3d0; box-shadow: 0 8px 22px rgba(110, 231, 183, .2); transform: translateY(-1px); }
-        button:active { transform: translateY(0); }
-        button:focus-visible { outline: 3px solid rgba(255, 255, 255, .8); outline-offset: 3px; }
-
-        .arrow { font-size: 18px; }
-        #status { min-height: 18px; margin: 16px 0 0; color: var(--warning); font: 13px Arial, sans-serif; }
-
-        @keyframes appear { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
-
-        @media (max-width: 560px) {
-            .intro { padding: 30px 22px 22px; }
-            .workspace { padding: 0 22px 26px; }
-            .actions { align-items: stretch; flex-direction: column; }
-            button { justify-content: center; }
-            #urlInput { min-height: 220px; }
-        }
-    </style>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <main class="app">
         <header class="intro">
-            <p class="eyebrow">A faster way to browse</p>
-            <h1>OpenBulkUrl</h1>
+            <div class="title-row">
+                <div>
+                    <p class="eyebrow">A faster way to browse</p>
+                    <h1>OpenBulkUrl</h1>
+                </div>
+                <button type="button" id="themeToggle" class="theme-toggle" aria-label="Toggle light and dark mode">
+                    <span class="toggle-icon" aria-hidden="true">☀️</span>
+                    <span class="toggle-text">Light</span>
+                </button>
+            </div>
             <p class="subtitle">Turn a list of links into an open tab set. Paste one URL per line and let your browser do the busywork.</p>
         </header>
 
@@ -167,47 +51,6 @@
         </section>
     </main>
 
-    <script>
-        const urlInput = document.getElementById('urlInput');
-        const count = document.getElementById('count');
-        const status = document.getElementById('status');
-
-        function getUrls() {
-            return urlInput.value.split(/\r?\n/).map(url => url.trim()).filter(Boolean);
-        }
-
-        function updateCount() {
-            const total = getUrls().length;
-            count.textContent = `${total} ${total === 1 ? 'link' : 'links'}`;
-        }
-
-        function openUrls() {
-            const urls = getUrls();
-            if (!urls.length) {
-                status.textContent = 'Add at least one URL to continue.';
-                urlInput.focus();
-                return;
-            }
-
-            let opened = 0;
-            urls.forEach(value => {
-                const url = /^https?:\/\//i.test(value) ? value : `https://${value}`;
-                if (URL.canParse(url)) {
-                    window.open(url, '_blank', 'noopener');
-                    opened++;
-                }
-            });
-            status.textContent = opened === urls.length
-                ? `${opened} ${opened === 1 ? 'tab' : 'tabs'} opened.`
-                : `${opened} of ${urls.length} entries opened. Check the remaining URLs.`;
-        }
-
-        urlInput.addEventListener('input', updateCount);
-        urlInput.addEventListener('keydown', event => {
-            if ((event.ctrlKey || event.metaKey) && event.key === 'Enter') openUrls();
-        });
-        document.getElementById('openButton').addEventListener('click', openUrls);
-        updateCount();
-    </script>
+    <script src="script.js"></script>
 </body>
 </html>
